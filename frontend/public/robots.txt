@@ -1,0 +1,18 @@
+# robots.txt for Sora Prompting Engine
+# https://sora-prompting-engine.vercel.app
+
+User-agent: *
+Allow: /
+
+# Disallow admin/private routes (if any in future)
+Disallow: /api/
+Disallow: /dashboard/
+
+# Allow public pages
+Allow: /
+Allow: /build
+Allow: /prompts
+
+# Sitemap (add in Phase 2 when sitemap is generated)
+# Sitemap: https://sora-prompting-engine.vercel.app/sitemap.xml
+

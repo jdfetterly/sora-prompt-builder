@@ -1,0 +1,33 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Chat Bot Labs -- Development, Design, Product
+    Contact: [Add contact email in Phase 2]
+    Twitter: [Add Twitter handle in Phase 2]
+    Location: [Add location in Phase 2]
+
+# THANKS
+
+    OpenAI -- Sora video model inspiration
+    Next.js -- React framework
+    Tailwind CSS -- Styling
+    TypeScript -- Type safety
+
+# TECHNOLOGY COLOPHON
+
+    Standards: HTML5, CSS3, JavaScript (ES2020+), TypeScript
+    Components: React 18, Next.js 15
+    Software: VS Code, Cursor
+    Hosting: Vercel (Phase 2)
+    Analytics: [Add in Phase 2]
+    Fonts: Playfair Display, Inter, JetBrains Mono (via Google Fonts)
+
+# SITE
+
+    Last update: 2024/12/XX
+    Language: English
+    Doctype: HTML5
+    IDE: Cursor, VS Code
+
