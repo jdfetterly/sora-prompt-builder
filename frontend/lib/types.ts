@@ -73,17 +73,6 @@ export enum ExportFormat {
 }
 
 /**
- * Context Memory Mode for localhost testing (F-15.1, F-15.2, F-15.3)
- * Used to toggle between different context visibility solutions
- */
-export enum ContextMemoryMode {
-  NONE = "none",           // Baseline (XL sidebar only)
-  ACCORDION = "accordion", // Solution F-15.2
-  PREVIEW = "preview",     // Solution F-15.3
-  HYBRID = "hybrid",       // Solution F-15.1
-}
-
-/**
  * Formatted prompt output
  */
 export interface FormattedPrompt {

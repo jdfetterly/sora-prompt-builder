@@ -1,6 +1,6 @@
 /**
- * @FeatureID F-1, F-2, F-15.1, F-15.2, F-15.3
- * @Purpose Builder page for creating prompts with context memory testing
+ * @FeatureID F-1, F-2
+ * @Purpose Builder page for creating prompts
  * @Spec /docs/PRD.md F-1, F-2
  * @Author Chat Bot Labs
  */
@@ -11,10 +11,6 @@ import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { StepNav } from "@/components/builder/StepNav";
 import { StepControls } from "@/components/builder/StepControls";
 import { PromptOutput } from "@/components/builder/PromptOutput";
-import { PromptSummaryAccordion } from "@/components/builder/PromptSummaryAccordion";
-import { FloatingPreviewButton } from "@/components/builder/FloatingPreviewButton";
-import { PreviewOverlay } from "@/components/builder/PreviewOverlay";
-import { ContextModeToggle } from "@/components/dev/ContextModeToggle";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { SubjectStep } from "@/components/builder/steps/SubjectStep";
@@ -23,7 +19,7 @@ import { StyleStep } from "@/components/builder/steps/StyleStep";
 import { CameraStep } from "@/components/builder/steps/CameraStep";
 import { VisualDetailsStep } from "@/components/builder/steps/VisualDetailsStep";
 import { saveDraft, getLastDraft, getDraft } from "@/lib/storage";
-import { validateField, validatePrompt } from "@/lib/validation";
+import { validateField } from "@/lib/validation";
 import type { Prompt } from "@/lib/types";
 import { PromptStatus } from "@/lib/types";
 
@@ -44,11 +40,6 @@ export default function BuildPage() {
   const [showDraftModal, setShowDraftModal] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
   const [draftLoaded, setDraftLoaded] = useState(false);
-
-  // Context Memory Testing States (F-15.1, F-15.2, F-15.3)
-  const [contextMode, setContextMode] = useState<string>("hybrid");
-  const [previewOverlayOpen, setPreviewOverlayOpen] = useState(false);
-  const [showPreviewButton, setShowPreviewButton] = useState(false);
 
   // Load draft on mount
   useEffect(() => {
@@ -107,46 +98,6 @@ export default function BuildPage() {
     setShowDraftModal(false);
     setDraftLoaded(true);
   };
-
-  // Load context mode from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("context-mode") || "hybrid";
-    setContextMode(saved);
-  }, []);
-
-  // Responsive check for preview button visibility
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setShowPreviewButton(window.innerWidth < 1280);
-    };
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
-
-  // Keyboard shortcuts for mode switching (1-4 keys)
-  useEffect(() => {
-    const handleModeSwitch = (e: KeyboardEvent) => {
-      // Only trigger if not typing in input/textarea
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
-      ) {
-        return;
-      }
-
-      const modes = ["none", "accordion", "preview", "hybrid"];
-      const index = parseInt(e.key) - 1;
-
-      if (index >= 0 && index < modes.length) {
-        localStorage.setItem("context-mode", modes[index]);
-        window.location.reload();
-      }
-    };
-
-    window.addEventListener("keypress", handleModeSwitch);
-    return () => window.removeEventListener("keypress", handleModeSwitch);
-  }, []);
 
   // Auto-save on change
   useEffect(() => {
@@ -313,15 +264,8 @@ export default function BuildPage() {
     }
   }, [currentStep, prompt, getFieldValidation, handleFieldChange]);
 
-  // Determine what to render based on context mode
-  const showAccordion = contextMode === "accordion" || contextMode === "hybrid";
-  const showPreview = contextMode === "preview" || contextMode === "hybrid";
-
   return (
     <div className="min-h-screen bg-background-primary">
-      {/* 🔧 DEV ONLY - Context Mode Toggle (Remove before production) */}
-      <ContextModeToggle />
-
       {/* Draft Recovery Modal */}
       <Modal
         isOpen={showDraftModal}
@@ -378,16 +322,6 @@ export default function BuildPage() {
             <div aria-live="polite" aria-atomic="true" className="sr-only">
               Step {currentStep} of 5
             </div>
-
-            {/* Accordion: Show in ACCORDION or HYBRID modes (Steps 2-5 only) */}
-            {showAccordion && currentStep > 1 && (
-              <PromptSummaryAccordion
-                prompt={prompt}
-                currentStep={currentStep}
-                className="mb-6"
-              />
-            )}
-
             {renderStep()}
 
             <StepControls
@@ -407,22 +341,6 @@ export default function BuildPage() {
           <PromptOutput prompt={prompt} />
         </aside>
       </div>
-
-      {/* Floating Preview Button: Show in PREVIEW or HYBRID modes (on screens < 1280px) */}
-      {showPreview && showPreviewButton && (
-        <FloatingPreviewButton
-          prompt={prompt}
-          onClick={() => setPreviewOverlayOpen(true)}
-          isVisible={true}
-        />
-      )}
-
-      {/* Preview Overlay: Always render, controlled by state */}
-      <PreviewOverlay
-        isOpen={previewOverlayOpen}
-        onClose={() => setPreviewOverlayOpen(false)}
-        prompt={prompt}
-      />
     </div>
   );
 }

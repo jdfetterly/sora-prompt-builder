@@ -80,8 +80,6 @@ const config: Config = {
         spotlightGlow: "spotlightGlow 2s ease-in-out infinite",
         spin: "spin 800ms linear infinite",
         shimmer: "shimmer 1.5s infinite",
-        "pulse-gold": "pulseShadow 2s infinite",
-        slideInRight: "slideInRight 350ms cubic-bezier(0.4, 0, 0.2, 1)",
       },
       keyframes: {
         fadeIn: {
@@ -111,18 +109,6 @@ const config: Config = {
         shimmer: {
           "0%": { backgroundPosition: "-1000px 0" },
           "100%": { backgroundPosition: "1000px 0" },
-        },
-        pulseShadow: {
-          "0%, 100%": {
-            boxShadow: "0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 0 rgba(212, 175, 55, 0.7)",
-          },
-          "50%": {
-            boxShadow: "0 4px 30px rgba(212, 175, 55, 0.6), 0 0 0 10px rgba(212, 175, 55, 0)",
-          },
-        },
-        slideInRight: {
-          from: { transform: "translateX(100%)" },
-          to: { transform: "translateX(0)" },
         },
       },
     },
